@@ -1,3 +1,5 @@
+#include Codes
+
 /*GUI inilize*/
 ver = V0.9 Beta
 Menu,Tray,Add,Exit,GuiClose
@@ -9,15 +11,58 @@ Gui, Add, Checkbox, x1 y39 w120 vawait gawait, Auto Await Instrutions    /* send
 Gui, Add, button, x0 y390 gClear, Clear ; to clear the list of messages  /* clear message box */
 Gui, Add, button, x165 y390 ghelp, Help                                  /* opens help display */
 Gui, Add, button, x130 y390 gTime, Time                                  /* pastes time in msg window */
-Gui, Add, button, x110 y390 gGoogle, G                                   /* google chrome link / custom link */
+Gui, Add, button, x110 y390 gProgram, G                                  /* program link / custom link */
 Gui, Add, button, x137 y38 GOptions , Options                            /* time option window */
 Gui, Add, edit, x3 y65 h310 w195 vlist,                                  /* Text/msg box */
 Gui, Add, text, x45 y395 w60 , %ver%                                     /* version tag */
 Gui, Show, h415 w200 X945 Y5 ,TD Assist                                  /* Opens GUI with SIZE */
 Return
 
-Google: /*G Button Link*/
+/*Main GUI Buttons and Options*/
+
+/*GUI Options inilize*/
+Options:
+	Gui, Show,
+return
+
+/*G Button Link*/
+Program: 
 	run, /*"program"*/
 return
 
 
+
+
+
+
+
+
+
+
+
+
+/* Edits open active job */
+#IFWINACTIVE, ahk_class ThunderRT6FormDC,
+#V::
+SetTitleMatchMode, Slow
+ControlGetText, mainbox, ThunderRT6TextBox2
+CONTROLGETTEXT, DES, ThunderRT6TextBox23,
+CONTROLGETTEXT, NOTES, ThunderRT6TextBox22,
+ControlSetText, ThunderRT6TextBox2,%mainbox% `n`n%DES% `n`n%NOTES%
+CONTROLSETTEXT, ThunderRT6TextBox23, 
+CONTROLSETTEXT, ThunderRT6TextBox22, 
+CONTROLSETTEXT, EDIT8, With Vehicle
+CONTROLSETTEXT, EDIT7, With Vehicle
+return
+
+
+/* Clears open active job */
+SetTitleMatchMode, 2
+SetTitleMatchMode, Slow
+#IFWINACTIVE, Recovery ,
+#C::
+CONTROLSETTEXT, Club, ThunderRT6TextBox??,
+JobCode(Club)
+/* code */
+
+return
