@@ -97,7 +97,12 @@ GuiControl,, list,
 return
 
 help:
-MsgBox, 0, Help %ver%, Windows key + V Edit's job `n`nWindows key + C Clears job `n`nInfo popup block: stops info cleardown / ata times sent `n`nBlock popups: stops on scene + on duty + job accept + off duty delayed by 3 Seconds `n`nTD Message Logger: stops driver message popups and lists messages In log screen `n`nAuto Await instrusions : will auto reply when driver has cleared `n`nNight Control: Will let you chosse Night PDA or Phone `n`nG Button : Open's Google 
+MsgBox, 0, Help %ver%, Windows key + V Edit's job `n`nWindows key + C Clears job 
+	`n`nInfo popup block: stops info cleardown / ata times sent `n`n
+	Block popups: stops on scene + on duty + job accept + off duty delayed by 3 Seconds 
+	`n`nTD Message Logger: stops driver message popups and lists messages In log screen 
+	`n`nAuto Await instrusions : will auto reply when driver has cleared 
+	`n`nNight Control: Will let you chosse Night PDA or Phone `n`nG Button : Open's A Program
 return
 
 Time:
