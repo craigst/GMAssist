@@ -30,7 +30,82 @@ Program:
 	run, /*"program"*/
 return
 
+/*Message logger*/
+Logger:
+   GuiControlGet, Logger
+   SetTimer, Logger2, % (Logger ? 0 : "Off")
+Return
 
+beta:
+   GuiControlGet, beta
+   SetTimer, beta2, % (beta ? 0 : "Off")
+Return
+
+await:
+   GuiControlGet, await
+   SetTimer, await2, % (beta ? 0 : "Off")
+Return
+
+Label: ; block td notes acept and on scenes
+SetTitleMatchMode, 3
+   IfWinExist, TD Note
+   {
+   sleep 3000
+   ControlClick, THUNDERRT6COMMANDBUTTON1, TD Note,,,,NA 
+   }
+      
+return
+
+beta2:  ; block confirm messages 
+SetTitleMatchMode, 3
+   IfWinExist, Garage Manager ahk_class #32770
+   {
+   WinClose
+   }
+return
+
+await2: ; auto sent await instrution on clear down
+IfWinExist, TD Clear Note
+{
+	SLEEP 1000
+	Controlclick, THUNDERRT6OPTIONBUTTON2, TD Clear Note 
+	sleep, 300
+	ControlClick, THUNDERRT6COMMANDBUTTON2, TD Clear Note
+}
+return
+	
+Logger2: ; to colect message from drive and store in gui + log
+SetTitleMatchMode, Slow
+SetTitleMatchMode, 3
+IfWinExist, TD Message
+{
+   CONTROLgetTEXT, text, ThunderRT6TextBox1
+   ControlClick, THUNDERRT6COMMANDBUTTON1, TD Message
+   FileAppend, %text%`n, C:\Tdmessageslog.txt
+   GuiControlGet, list
+   list .= text
+   GuiControl,, list, %list%`n`n
+   IfWinExist, TD Manager
+    WinActivate, wintitle, TD Manager
+	ControlSend,, list, ^{end}
+}
+return
+
+Clear:
+GuiControl,, list,
+;clear messages
+return
+
+help:
+MsgBox, 0, Help %ver%, Windows key + V Edit's job `n`nWindows key + C Clears job `n`nInfo popup block: stops info cleardown / ata times sent `n`nBlock popups: stops on scene + on duty + job accept + off duty delayed by 3 Seconds `n`nTD Message Logger: stops driver message popups and lists messages In log screen `n`nAuto Await instrusions : will auto reply when driver has cleared `n`nNight Control: Will let you chosse Night PDA or Phone `n`nG Button : Open's Google 
+return
+
+Time:
+    time = %A_Hour%:%A_Min%
+	GuiControlGet, list
+	list .= time
+	GuiControl,, list, %time%`n
+    RETURN
 
 
 
