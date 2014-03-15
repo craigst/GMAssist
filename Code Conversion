@@ -1,7 +1,7 @@
-//Code conversion
-// Club Var will only be OWN BRIT OR AA
+/*Code conversion*/
+/* Club Var will only be OWN BRIT OR AA */
 
-CONTROLGETTEXT, Fault,ThunderRT6TextBox29, //get fault from job window
+CONTROLGETTEXT, Fault,ThunderRT6TextBox29, /*get fault from job window*/
 if(Fault = "GF01"||"GFO1"||"GF1")
    {if (Club = "OWN") {ControlSetText, thunderRT6textbox27, OWN01} 
    eles if (Club = "AA") {ControlSetText, thunderRT6textbox27, AA01} 
