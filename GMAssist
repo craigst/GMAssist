@@ -13,7 +13,7 @@ Gui, Add, button, x110 y390 gGoogle, G                                   // goog
 Gui, Add, button, x137 y38 GOptions , Options                            // time option window
 Gui, Add, edit, x3 y65 h310 w195 vlist,                                  // Text/msg box
 Gui, Add, text, x45 y395 w60 , %ver%                                     // version tag
-Gui, Show, h415 w200 X945 Y5 ,TD Assist                                  // Gui header 
+Gui, Show, h415 w200 X945 Y5 ,TD Assist                                  // Opens GUI with SIZE
 
 
 Return
