@@ -1,0 +1,1213 @@
+ver = V0.70 Beta
+Menu,Tray,Add,Exit,GuiClose
+SetTitleMatchMode, 2
+Gui, Add, Checkbox, x1 y5 w100 vCheckbox gCheckBox, Block Popups
+Gui, Add, Checkbox, x115 y5 w100 vLogger gLogger, TD Message Logger
+Gui, Add, Checkbox, x1 y19 w100 vbeta gbeta, Info popup block
+Gui, Add, Checkbox, x1 y39 w120 vawait gawait, Auto Await Instrutions
+Gui, add, button, x0 y390 gClear, Clear ; to clear the list of messages
+Gui, add, button, x165 y390 ghelp, Help
+Gui, add, button, x130 y390 gTime, Time
+Gui, add, button, x110 y390 gGoogle, G
+Gui, add, button, x137 y38 GOptions , Options
+gui, add, edit, x3 y65 h310 w195 vlist,
+gui, add, text, x45 y395 w60 , %ver%
+Gui, Show, h415 w200 X945 Y5 ,TD Assist
+
+
+Return
+Checkbox:
+   GuiControlGet, Checkbox
+   SetTimer, Label, % (Checkbox ? 0 : "Off")
+return
+
+google:
+	run, C:\Users\Public\Documents\CRAIG\GoogleChromePortable\GoogleChromePortable.exe
+return
+
+Logger:
+   GuiControlGet, Logger
+   SetTimer, Logger2, % (Logger ? 0 : "Off")
+Return
+
+beta:
+   GuiControlGet, beta
+   SetTimer, beta2, % (beta ? 0 : "Off")
+Return
+
+await:
+   GuiControlGet, await
+   SetTimer, await2, % (beta ? 0 : "Off")
+Return
+
+Label: ; block td notes acept and on scenes
+SetTitleMatchMode, 3
+   IfWinExist, TD Note
+   {
+   sleep 3000
+   ControlClick, THUNDERRT6COMMANDBUTTON1, TD Note,,,,NA 
+   }
+      
+return
+
+beta2:  ; block confirm messages 
+SetTitleMatchMode, 3
+   IfWinExist, Garage Manager ahk_class #32770
+   {
+   WinClose
+   }
+return
+
+await2: ; auto sent await instrution on clear down
+IfWinExist, TD Clear Note
+{
+	SLEEP 1000
+	Controlclick, THUNDERRT6OPTIONBUTTON2, TD Clear Note 
+	sleep, 300
+	ControlClick, THUNDERRT6COMMANDBUTTON2, TD Clear Note
+}
+return
+	
+Logger2: ; to colect message from drive and store in gui + log
+SetTitleMatchMode, Slow
+SetTitleMatchMode, 3
+IfWinExist, TD Message
+{
+   CONTROLgetTEXT, text, ThunderRT6TextBox1
+   ControlClick, THUNDERRT6COMMANDBUTTON1, TD Message
+   FileAppend, %text%`n, C:\Tdmessageslog.txt
+   GuiControlGet, list
+   list .= text
+   GuiControl,, list, %list%`n`n
+   IfWinExist, TD Manager
+    WinActivate, wintitle, TD Manager
+	ControlSend,, list, ^{end}
+}
+return
+
+Clear:
+GuiControl,, list,
+;clear messages
+return
+
+help:
+MsgBox, 0, Help %ver%, Windows key + V Edit's job `n`nWindows key + C Clears job `n`nInfo popup block: stops info cleardown / ata times sent `n`nBlock popups: stops on scene + on duty + job accept + off duty delayed by 3 Seconds `n`nTD Message Logger: stops driver message popups and lists messages In log screen `n`nAuto Await instrusions : will auto reply when driver has cleared `n`nNight Control: Will let you chosse Night PDA or Phone `n`nG Button : Open's Google 
+return
+
+Time:
+    time = %A_Hour%:%A_Min%
+	GuiControlGet, list
+	list .= time
+	GuiControl,, list, %time%`n
+    RETURN
+	
+Options:
+	MsgBox, 0, Options Menu
+RETURN
+
+#IFWINACTIVE, ahk_class ThunderRT6FormDC,
+#V::
+SetTitleMatchMode, Slow
+ControlGetText, mainbox, ThunderRT6TextBox2
+CONTROLGETTEXT, DES, ThunderRT6TextBox23,
+CONTROLGETTEXT, NOTES, ThunderRT6TextBox22,
+ControlSetText, ThunderRT6TextBox2,%mainbox% `n`n%DES% `n`n%NOTES%
+CONTROLSETTEXT, ThunderRT6TextBox23, 
+CONTROLSETTEXT, ThunderRT6TextBox22, 
+CONTROLSETTEXT, EDIT8, With Vehicle
+CONTROLSETTEXT, EDIT7, With Vehicle
+return
+
+SetTitleMatchMode, 2
+SetTitleMatchMode, Slow
+#IFWINACTIVE, Recovery 45,
+#C::
+CONTROLGETTEXT, fault,ThunderRT6TextBox29, 
+if(fault = "GF01")
+{   
+ControlSetText, thunderRT6textbox27, BR50 
+}
+else if(fault = "GF02")
+{   
+ControlSetText, thunderRT6textbox27, BR50 
+}
+else if(fault = "GF03")
+{   
+ControlSetText, thunderRT6textbox27, BR44 
+}
+else if(fault = "GF04")
+{   
+ControlSetText, thunderRT6textbox27, BR32 
+}
+else if(fault = "GF05")
+{   
+ControlSetText, thunderRT6textbox27, BR42 
+}
+else if(fault = "GF06")
+{   
+ControlSetText, thunderRT6textbox27, BR50 
+}
+else if(fault = "GF07")
+{   
+ControlSetText, thunderRT6textbox27, BR50 
+}
+else if(fault = "GF08")
+{   
+ControlSetText, thunderRT6textbox27, BR31 
+}
+else if(fault = "GF09")
+{   
+ControlSetText, thunderRT6textbox27, BR31 
+}
+else if(fault = "GF10")
+{   
+ControlSetText, thunderRT6textbox27, BR51 
+}
+else if(fault = "GF11")
+{   
+ControlSetText, thunderRT6textbox27, BR25 
+}
+else if(fault = "GF12")
+{   
+ControlSetText, thunderRT6textbox27, BR36 
+}
+else if(fault = "GF13")
+{   
+ControlSetText, thunderRT6textbox27, BR36 
+}
+else if(fault = "GF14")
+{   
+ControlSetText, thunderRT6textbox27, BR36 
+}
+else if(fault = "GF15")
+{   
+ControlSetText, thunderRT6textbox27, BR24 
+}
+else if(fault = "GF16")
+{   
+ControlSetText, thunderRT6textbox27, BR36 
+}
+else if(fault = "GF17")
+{   
+ControlSetText, thunderRT6textbox27, BR36 
+}
+else if(fault = "GF18")
+{   
+ControlSetText, thunderRT6textbox27, BR52 
+}
+else if(fault = "GF19")
+{   
+ControlSetText, thunderRT6textbox27, BR41 
+}
+else if(fault = "GF20")
+{   
+ControlSetText, thunderRT6textbox27, BR50 
+}
+else if(fault = "GF21")
+{   
+ControlSetText, thunderRT6textbox27, BR91 
+}
+else if(fault = "GF22")
+{   
+ControlSetText, thunderRT6textbox27, BR52 
+}
+else if(fault = "GF23")
+{   
+ControlSetText, thunderRT6textbox27, BR47 
+}
+else if(fault = "GF24")
+{   
+ControlSetText, thunderRT6textbox27, BR04 
+}
+else if(fault = "GF25")
+{   
+ControlSetText, thunderRT6textbox27, BR04 
+}
+else if(fault = "GF26")
+{   
+ControlSetText, thunderRT6textbox27, BR04
+}
+else if(fault = "GF27")
+{   
+ControlSetText, thunderRT6textbox27, BR04 
+}
+else if(fault = "GF28")
+{   
+ControlSetText, thunderRT6textbox27, BR21 
+}
+else if(fault = "GF29")
+{   
+ControlSetText, thunderRT6textbox27, BR21 
+}
+else if(fault = "GF30")
+{   
+ControlSetText, thunderRT6textbox27, BR20 
+}
+else if(fault = "GF31")
+{   
+ControlSetText, thunderRT6textbox27, BR39
+}
+else if(fault = "GF32")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF33")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF34")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF35")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF36")
+{   
+ControlSetText, thunderRT6textbox27, BR29 
+}
+else if(fault = "GF37")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF38")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF39")
+{   
+ControlSetText, thunderRT6textbox27, BR49 
+}
+else if(fault = "GF40")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF41")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF42")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF43")
+{   
+ControlSetText, thunderRT6textbox27, BR68 
+}
+else if(fault = "GF44")
+{   
+ControlSetText, thunderRT6textbox27, BR15 
+}
+else if(fault = "GF45")
+{   
+ControlSetText, thunderRT6textbox27, BR68 
+}
+else if(fault = "GF46")
+{   
+ControlSetText, thunderRT6textbox27, BR15 
+}
+else if(fault = "GF47")
+{   
+ControlSetText, thunderRT6textbox27, BR14 
+}
+else if(fault = "GF48")
+{   
+ControlSetText, thunderRT6textbox27, BR18 
+}
+else if(fault = "GF49")
+{   
+ControlSetText, thunderRT6textbox27, BR18 
+}
+else if(fault = "GF50")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF51")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF52")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF53")
+{   
+ControlSetText, thunderRT6textbox27, BR18 
+}
+else if(fault = "GF54")
+{   
+ControlSetText, thunderRT6textbox27, BR01 
+}
+else if(fault = "GF55")
+{   
+ControlSetText, thunderRT6textbox27, BR75 
+}
+else if(fault = "GF56")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault == "GF57")
+{   
+ControlSetText, thunderRT6textbox27, BR75 
+}
+else if(fault == "GF58")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF59")
+{   
+ControlSetText, thunderRT6textbox27, BR34 
+}
+else if(fault = "GF60")
+{   
+ControlSetText, thunderRT6textbox27, BR73 
+}
+else if(fault = "GF61")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+else if(fault = "GF62")
+{   
+ControlSetText, thunderRT6textbox27, BR73 
+}
+else if(fault = "GF63")
+{   
+ControlSetText, thunderRT6textbox27, BR61 
+}
+else if(fault = "GF64")
+{   
+ControlSetText, thunderRT6textbox27, BR83 
+}
+else if(fault = "GF65")
+{   
+ControlSetText, thunderRT6textbox27, BR83 
+}
+else if(fault = "GF66")
+{   
+ControlSetText, thunderRT6textbox27, BR83 
+}
+else if(fault = "GF67")
+{   
+ControlSetText, thunderRT6textbox27, BR69 
+}
+else if(fault = "GF68")
+{   
+ControlSetText, thunderRT6textbox27, BR08
+}
+else if(fault = "GF69")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+else if(fault = "GF70")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF71")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF72")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF73")
+{   
+ControlSetText, thunderRT6textbox27, BR61 
+}
+else if(fault = "GF74")
+{   
+ControlSetText, thunderRT6textbox27, BR61
+}
+else if(fault = "GF75")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF76")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF78")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF79")
+{   
+ControlSetText, thunderRT6textbox27, BR01 
+}
+else if(fault = "GF80")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF81")
+{   
+ControlSetText, thunderRT6textbox27, BR33 
+}
+else if(fault = "GF82")
+{   
+ControlSetText, thunderRT6textbox27, BR33 
+}
+else if(fault = "GF83")
+{   
+ControlSetText, thunderRT6textbox27, BR82 
+}
+else if(fault = "GF84")
+{   
+ControlSetText, thunderRT6textbox27, BR65 
+}
+else if(fault = "GF85")
+{   
+ControlSetText, thunderRT6textbox27, BR17
+}
+else if(fault = "GF86")
+{   
+ControlSetText, thunderRT6textbox27, BR17 
+}
+else if(fault = "GF87")
+{   
+ControlSetText, thunderRT6textbox27, BR17 
+}
+else if(fault = "GF88")
+{   
+ControlSetText, thunderRT6textbox27, BR17 
+}
+else if(fault = "GF89")
+{   
+ControlSetText, thunderRT6textbox27, BR37 
+}
+else if(fault = "GF90")
+{   
+ControlSetText, thunderRT6textbox27, BR37 
+}
+else if(fault = "GF91")
+{   
+ControlSetText, thunderRT6textbox27, BR37 
+}
+else if(fault = "GF92")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+else if(fault = "GF93")
+{   
+ControlSetText, thunderRT6textbox27, BR38 
+}
+else if(fault = "GF94")
+{   
+ControlSetText, thunderRT6textbox27, BR38
+}
+else if(fault = "GF95")
+{   
+ControlSetText, thunderRT6textbox27, BR38 
+}
+else if(fault = "GF96")
+{   
+ControlSetText, thunderRT6textbox27, BR38 
+}
+else if(fault = "GF97")
+{   
+ControlSetText, thunderRT6textbox27, BR38 
+}
+else if(fault = "GF98")
+{   
+ControlSetText, thunderRT6textbox27, BR37 
+}
+else if(fault = "GF99")
+{   
+ControlSetText, thunderRT6textbox27, BR37 
+}
+else if(fault = "GF100")
+{   
+ControlSetText, thunderRT6textbox27, BR37 
+}
+else if(fault = "GF101")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+else if(fault = "GF102")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+else if(fault = "GF103")
+{   
+ControlSetText, thunderRT6textbox27, BR48 
+}
+else if(fault = "GF104")
+{   
+ControlSetText, thunderRT6textbox27, BR59 
+}
+else if(fault = "GF105")
+{   
+ControlSetText, thunderRT6textbox27, BR40 
+}
+else if(fault = "GF106")
+{   
+ControlSetText, thunderRT6textbox27, BR40 
+}
+else if(fault = "GF107")
+{   
+ControlSetText, thunderRT6textbox27, BR40 
+}
+else if(fault = "GF108")
+{   
+ControlSetText, thunderRT6textbox27, BR40 
+}
+else if(fault = "GF109")
+{   
+ControlSetText, thunderRT6textbox27, BR59 
+}
+else if(fault = "GF110")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF111")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF112")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF113")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF114")
+{  
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF115")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF116")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF117")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF118")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF119")
+{   
+ControlSetText, thunderRT6textbox27, BR76 
+}
+else if(fault = "GF120")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF121")
+{   
+ControlSetText, thunderRT6textbox27, BR05 
+}
+else if(fault = "GF122")
+{   
+ControlSetText, thunderRT6textbox27, BR23 
+}
+else if(fault = "GF123")
+{   
+ControlSetText, thunderRT6textbox27, BR23 
+}
+else if(fault = "GF124")
+{   
+ControlSetText, thunderRT6textbox27, BR23 
+}
+else if(fault = "GF125")
+{   
+ControlSetText, thunderRT6textbox27, BR23 
+}
+else if(fault = "GF126")
+{   
+ControlSetText, thunderRT6textbox27, BR23 
+}
+else if(fault = "GF127")
+{   
+ControlSetText, thunderRT6textbox27, BR23 
+}
+else if(fault = "GF128")
+{   
+ControlSetText, thunderRT6textbox27, BR26 
+}
+else if(fault = "GF129")
+{   
+ControlSetText, thunderRT6textbox27, BR50
+}
+else if(fault = "GF130")
+{   
+ControlSetText, thunderRT6textbox27, BR07 
+}
+else if(fault = "GF131")
+{   
+ControlSetText, thunderRT6textbox27, BR07 
+}
+else if(fault = "GF132")
+{   
+ControlSetText, thunderRT6textbox27, BR11 
+}
+else if(fault = "GF133")
+{   
+ControlSetText, thunderRT6textbox27, BR11 
+}
+else if(fault = "GF134")
+{   
+ControlSetText, thunderRT6textbox27, BR11 
+}
+else if(fault = "GF135")
+{   
+ControlSetText, thunderRT6textbox27, BR11 
+}
+else if(fault = "GF136")
+{   
+ControlSetText, thunderRT6textbox27, BR11 
+}
+else if(fault = "GF137")
+{   
+ControlSetText, thunderRT6textbox27, BR11 
+}
+else if(fault = "GF138")
+{   
+ControlSetText, thunderRT6textbox27, BR11 
+}
+else if(fault = "GF139")
+{   
+ControlSetText, thunderRT6textbox27, BR32 
+}
+else if(fault = "GF140")
+{   
+ControlSetText, thunderRT6textbox27, BR92 
+}
+else if(fault = "GF141")
+{   
+ControlSetText, thunderRT6textbox27, BR92 
+}
+else if(fault = "GF142")
+{   
+ControlSetText, thunderRT6textbox27, BR86 
+}
+else if(fault = "GF143")
+{   
+ControlSetText, thunderRT6textbox27, BR18
+}
+else if(fault = "GF144")
+{   
+ControlSetText, thunderRT6textbox27, BR90 
+}
+else if(fault = "GF145")
+{   
+ControlSetText, thunderRT6textbox27, BR94 
+}
+else if(fault = "GF146")
+{   
+ControlSetText, thunderRT6textbox27, BR90 
+}
+else if(fault = "GF147")
+{   
+ControlSetText, thunderRT6textbox27, BR90 
+}
+else if(fault = "GF148")
+{   
+ControlSetText, thunderRT6textbox27, BR45 
+}
+else if(fault = "GF149")
+{   
+ControlSetText, thunderRT6textbox27, BR45 
+}
+else if(fault = "GF150")
+{   
+ControlSetText, thunderRT6textbox27, BR78 
+}
+else if(fault = "GF151")
+{   
+ControlSetText, thunderRT6textbox27, BR95 
+}
+else if(fault = "GF152")
+{   
+ControlSetText, thunderRT6textbox27, BR95 
+}
+else if(fault = "GF153")
+{   
+ControlSetText, thunderRT6textbox27, BR8
+}
+else if(fault = "GF154")
+{   
+ControlSetText, thunderRT6textbox27, BR78
+}
+else if(fault = "GF155")
+{   
+ControlSetText, thunderRT6textbox27, BR78 
+}
+else if(fault = "GF156")
+{   
+ControlSetText, thunderRT6textbox27, BR84 
+}
+else if(fault = "GF157")
+{   
+ControlSetText, thunderRT6textbox27, BR62 
+}
+else if(fault = "GF158")
+{   
+ControlSetText, thunderRT6textbox27, BR8 
+}
+else if(fault = "GF159")
+{   
+ControlSetText, thunderRT6textbox27, BR02 
+}
+else if(fault = "GF160")
+{   
+ControlSetText, thunderRT6textbox27, BR3 
+}
+else if(fault = "GF161")
+{   
+ControlSetText, thunderRT6textbox27, BR03 
+}
+else if(fault = "GF162") ;VANDALIZE
+{   
+ControlSetText, thunderRT6textbox27, BR58 
+}
+else if(fault = "GF163") ;FIRE
+{   
+ControlSetText, thunderRT6textbox27, BR57 
+}
+else if(fault = "GF164")
+{   
+ControlSetText, thunderRT6textbox27, BR70 
+}
+else if(fault = "GF165")
+{   
+ControlSetText, thunderRT6textbox27, BR74 
+}
+else if(fault = "GF166")
+{   
+ControlSetText, thunderRT6textbox27, BR109 
+}
+else if(fault = "GF167")
+{   
+ControlSetText, thunderRT6textbox27, BR105 
+}
+else if(fault = "GF168")
+{   
+ControlSetText, thunderRT6textbox27, BR102 
+}
+else if(fault = "GF169")
+{   
+ControlSetText, thunderRT6textbox27, BR108 
+}
+else if(fault = "GF170")
+{   
+ControlSetText, thunderRT6textbox27, BR103 
+}
+else if(fault = "GF171")
+{   
+ControlSetText, thunderRT6textbox27, BR102 
+}
+else if(fault = "GF172")
+{   
+ControlSetText, thunderRT6textbox27, BR106 
+}
+else if(fault = "GF173")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+else if(fault = "GF174")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+else if(fault = "GF175")
+{   
+ControlSetText, thunderRT6textbox27, BR99 
+}
+else if(fault = "GF176")
+{   
+ControlSetText, thunderRT6textbox27, BR23 
+}
+else if(fault = "GF177")
+{   
+ControlSetText, thunderRT6textbox27, BR98 
+}
+else if(fault = "GF178")
+{   
+ControlSetText, thunderRT6textbox27, BR81 
+}
+else if(fault = "GF179")
+{   
+ControlSetText, thunderRT6textbox27, BR08 
+}
+
+else
+{
+	MSGBOX, 16,Error, ERROR INCORRECT CODES
+    ControlSetText, thunderRT6textbox26, %fault%
+	RETURN
+}
+CONTROLGETTEXT, OUTCOME,ThunderRT6TextBox30, 
+if(OUTCOME = "TOW01GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW03BR 
+}
+else if(OUTCOME = "TOW02GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW04BR 
+}
+else if(OUTCOME = "TOW03GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW05BR 
+}
+else if(OUTCOME = "TOW04GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW10BR 
+}
+else if(OUTCOME = "TOW05GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW08BR 
+}
+else if(OUTCOME = "TOW06GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW11BR 
+}
+else if(OUTCOME = "TOW07GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW01BR 
+}
+else if(OUTCOME = "TOW08GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW16BR 
+}
+else if(OUTCOME = "TOW09GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW15BR 
+}
+else if(OUTCOME = "TOW10GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW13BR 
+}
+else if(OUTCOME = "TOW11GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW14BR 
+}
+else if(OUTCOME = "TOW12GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW07BR 
+}
+else if(OUTCOME = "TOW13GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW10BR 
+}
+else if(OUTCOME = "TOW14GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW10BR 
+}
+else if(OUTCOME = "TOW15GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW10BR 
+}
+else if(OUTCOME = "FIX01")
+{   
+ControlSetText, thunderRT6textbox26, FIX17BR 
+}
+else if(OUTCOME = "FIX02")
+{   
+ControlSetText, thunderRT6textbox26, FIX13BR 
+}
+else if(OUTCOME = "FIX03")
+{   
+ControlSetText, thunderRT6textbox26, FIX02BR 
+}
+else if(OUTCOME = "FIX04")
+{   
+ControlSetText, thunderRT6textbox26, FIX03BR 
+}
+else if(OUTCOME = "FIX05")
+{   
+ControlSetText, thunderRT6textbox26, FIX04BR 
+}
+else if(OUTCOME = "FIX06")
+{   
+ControlSetText, thunderRT6textbox26, FIX06BR 
+}
+else if(OUTCOME = "FIX07")
+{   
+ControlSetText, thunderRT6textbox26, FIX19BR
+}
+else if(OUTCOME = "FIX08")
+{   
+ControlSetText, thunderRT6textbox26, FIX06BR 
+}
+else if(OUTCOME = "FIX09")
+{   
+ControlSetText, thunderRT6textbox26, FIX01BR
+}
+else if(OUTCOME = "FIX10")
+{   
+ControlSetText, thunderRT6textbox26, FIX16BR 
+}
+else if(OUTCOME = "FIX11")
+{   
+ControlSetText, thunderRT6textbox26, FIX12BR 
+}
+else if(OUTCOME = "FIX12")
+{   
+ControlSetText, thunderRT6textbox26, FIX15BR
+}
+else if(OUTCOME = "FIX13")
+{   
+ControlSetText, thunderRT6textbox26, FIX21BR
+}
+else if(OUTCOME = "FIX14")
+{   
+ControlSetText, thunderRT6textbox26, FIX09BR
+}
+else if(OUTCOME = "FIX15")
+{   
+ControlSetText, thunderRT6textbox26, FIX10BR
+}
+else if(OUTCOME = "FIX16")
+{   
+ControlSetText, thunderRT6textbox26, FIX20BR 
+}
+else if(OUTCOME = "FIX17")
+{   
+ControlSetText, thunderRT6textbox26, FIX11BR
+}
+else if(OUTCOME = "FIX18")
+{   
+ControlSetText, thunderRT6textbox26, FIX20BR
+}
+else
+{
+	MSGBOX, 16,Error, ERROR INCORRECT CODES
+    ControlSetText, thunderRT6textbox26, %OUTCOME%
+	RETURN
+}
+CONTROLCLICK, THUNDERRT6COMMANDBUTTON3,,,,,NA
+SLEEP, 200
+send, {enter}
+sleep 200
+CONTROLCLICK, THUNDERRT6COMMANDBUTTON4,,,,,NA
+sleep 200
+send, {enter}
+sleep 200
+	
+ControlGetText, mileage,ThunderRT6TextBox37,
+if (mileage = "") 
+{
+msgbox ,36,No Mileage, No Mileage Do you wish to Conitnue? 
+IfMsgBox yes 
+   GoSub, Cleardown 
+IfMsgBox no 
+   Return
+} 
+else 
+{
+gosub, Cleardown   
+}
+
+return
+
+#IFWINACTIVE, Recovery KMG, 
+#C::
+SetTitleMatchMode, Slow
+CONTROLGETTEXT, FAULT, ThunderRT6TextBox29,
+CONTROLSETTEXT, ThunderRT6TextBox27,%FAULT%
+sleep, 100
+CONTROLGETTEXT, OUTCOME,ThunderRT6TextBox30, 
+if(OUTCOME = "TOW01GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW01GF 
+}
+else if(OUTCOME = "TOW02GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW02GF 
+}
+else if(OUTCOME = "TOW03GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW03GF 
+}
+else if(OUTCOME = "TOW04GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW04GF 
+}
+else if(OUTCOME = "TOW05GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW05GF 
+}
+else if(OUTCOME = "TOW06GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW06GF 
+}
+else if(OUTCOME = "TOW07GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW07GF 
+}
+else if(OUTCOME = "TOW08GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW08GF 
+}
+else if(OUTCOME = "TOW09GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW09GF 
+}
+else if(OUTCOME = "TOW10GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW10GF 
+}
+else if(OUTCOME = "TOW11GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW11GF 
+}
+else if(OUTCOME = "TOW12GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW12GF 
+}
+else if(OUTCOME = "TOW13GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW13GF 
+}
+else if(OUTCOME = "TOW14GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW14GF 
+}
+else if(OUTCOME = "TOW15GF")
+{   
+ControlSetText, thunderRT6textbox26, TOW15GF 
+}
+else if(OUTCOME = "FIX01")
+{   
+ControlSetText, thunderRT6textbox26, FIX01GF 
+}
+else if(OUTCOME = "FIX02")
+{   
+ControlSetText, thunderRT6textbox26, FIX02GF 
+}
+else if(OUTCOME = "FIX03")
+{   
+ControlSetText, thunderRT6textbox26, FIX03GF 
+}
+else if(OUTCOME = "FIX04")
+{   
+ControlSetText, thunderRT6textbox26, FIX04GF 
+}
+else if(OUTCOME = "FIX05")
+{   
+ControlSetText, thunderRT6textbox26, FIX05GF 
+}
+else if(OUTCOME = "FIX06")
+{   
+ControlSetText, thunderRT6textbox26, FIX06GF 
+}
+else if(OUTCOME = "FIX07")
+{   
+ControlSetText, thunderRT6textbox26, FIX07GF 
+}
+else if(OUTCOME = "FIX08")
+{   
+ControlSetText, thunderRT6textbox26, FIX08GF 
+}
+else if(OUTCOME = "FIX09")
+{   
+ControlSetText, thunderRT6textbox26, FIX09GF 
+}
+else if(OUTCOME = "FIX10")
+{   
+ControlSetText, thunderRT6textbox26, FIX10GF 
+}
+else if(OUTCOME = "FIX11")
+{   
+ControlSetText, thunderRT6textbox26, FIX11GF 
+}
+else if(OUTCOME = "FIX12")
+{   
+ControlSetText, thunderRT6textbox26, FIX12GF 
+}
+else if(OUTCOME = "FIX13")
+{   
+ControlSetText, thunderRT6textbox26, FIX13GF 
+}
+else if(OUTCOME = "FIX14")
+{   
+ControlSetText, thunderRT6textbox26, FIX14GF 
+}
+else if(OUTCOME = "FIX15")
+{   
+ControlSetText, thunderRT6textbox26, FIX15GF 
+}
+else if(OUTCOME = "FIX16")
+{   
+ControlSetText, thunderRT6textbox26, FIX16GF 
+}
+else if(OUTCOME = "FIX17")
+{   
+ControlSetText, thunderRT6textbox26, FIX17GF 
+}
+else if(OUTCOME = "FIX18")
+{   
+ControlSetText, thunderRT6textbox26, FIX18GF 
+}
+else
+{
+	MSGBOX, 16,Error, ERROR INCORRECT CODES
+    ControlSetText, thunderRT6textbox26, %OUTCOME%
+	RETURN
+}
+CONTROLCLICK, THUNDERRT6COMMANDBUTTON3,,,,,NA
+SLEEP, 200
+send, {enter}
+sleep 200
+CONTROLCLICK, THUNDERRT6COMMANDBUTTON4,,,,,NA
+sleep 200
+send, {enter}
+sleep 200
+	
+ControlGetText, mileage,ThunderRT6TextBox37, ; check missage of job
+if (mileage = "") 
+{
+msgbox ,36,No Mileage, No Mileage Do you wish to Conitnue? 
+IfMsgBox yes 
+   GoSub, Cleardown 
+IfMsgBox no 
+   Return
+} 
+else 
+{
+gosub, Cleardown  
+}
+	return 
+	
+Cleardown: 	; clear down job to clubs brit + europ + kav
+	SetKeyDelay, 100
+	CONTROLGETTEXT, fault1,ThunderRT6TextBox29,
+	CONTROLGETTEXT, OUTCOME1,ThunderRT6TextBox30,
+MsgBox, 36, ClearDown, Fault: %FAULT1% `nOutcome: %OUTCOME1% `nIs Clear Down Correct? 
+
+IfMsgBox, Yes ; save and exit job and send down clear
+{ 
+	ControlClick, ThunderRT6Commandbutton12
+	SLEEP, 200
+	ControlClick, ThunderRT6Commandbutton12
+	SLEEP, 200
+    WinWaitClose, ahk_class ThunderRT6FormDC
+   Send, +{f3} 
+   WinWait, ahk_class #32770
+   Send, {enter} 
+   CLEARED = JOB CLEARED %A_Hour%:%A_Min%
+   GuiControlGet, list
+   list .= CLEARED
+   GuiControl,, list, %CLEARED%`n`n
+}
+else 
+{
+MsgBox, 16, ClearDown, Canceled ! `nPlease Note InCorrect Code's `nFault: %fauLt% Outcome: %OUTCOME%
+	ERROR = `nPlease Note InCorrect Code's `nFault: %fauLt% Outcome: %OUTCOME%
+	GuiControlGet, list
+   list .= ERROR
+   GuiControl,, list, %ERROR%`n`n
+   FileAppend, %ERROR%`n, C:\Tdmessageslog.txt
+   CONTROLSETTEXT, ThunderRT6TextBox27,%fault%
+   CONTROLSETTEXT, ThunderRT6TextBox29,%OUTCOME%
+}
+return
+GuiClose:
+	ExitApp
+	return
