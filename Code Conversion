@@ -2,13 +2,20 @@
 /* Club Var will only be OWN BRIT OR AA */
 
 CONTROLGETTEXT, Fault,ThunderRT6TextBox29, /*get fault from job window*/
-if(Fault = "GF01"||"GFO1"||"GF1")
-   {if (Club = "OWN") {ControlSetText, thunderRT6textbox27, OWN01} 
-   eles if (Club = "AA") {ControlSetText, thunderRT6textbox27, AA01} 
-   eles if (Club = "BRIT") {ControlSetText, thunderRT6textbox27, BR01} 
+if (Fault = "GF01" or "GFO1" or "GF1")
+   {
+   if (Club = "AA") {ControlSetText, thunderRT6textbox27, AA01} 
+   eles if (Club = "BRIT") {ControlSetText, thunderRT6textbox27, BR01}
+   eles if (Club = "OWN") {ControlSetText, thunderRT6textbox27, OWN01}
+   eles {ControlSetText, thunderRT6textbox27, OWN01}
    }
-if(Fault = "GF02"||"GFO2"||"GF2")
-   {if (Club = "OWN") {ControlSetText, thunderRT6textbox27, OWN02} 
-   eles if (Club = "AA") {ControlSetText, thunderRT6textbox27, AA02} 
-   eles if (Club = "BRIT") {ControlSetText, thunderRT6textbox27, BR02} 
+eles if (Fault = "GF02" or "GFO2" or "GF2")
+   {
+   if (Club = "AA") {ControlSetText, thunderRT6textbox27, AA02} 
+   eles if (Club = "BRIT") {ControlSetText, thunderRT6textbox27, BR02}
+   eles if (Club = "OWN") {ControlSetText, thunderRT6textbox27, OWN02}
+   eles {ControlSetText, thunderRT6textbox27, OWN012}
    }
+   
+   
+eles {msgbox %error no fault code found%} /*no fault code from job window matched*/
