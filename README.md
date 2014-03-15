@@ -20,6 +20,18 @@ away from keyboard respose to clear down
 
 all options and times can be adjusted to suit controllers needs
 
+(message scripts)
+clear down code checks
+clear down milage checks
+
+(menu options)
+On scene / job accept dissmis and time to dissmiss (checkbox/time)
+job cleared auto respond / time to auto responde (checkbox/time)
+message recorded system (checkbox)
+
+(key funtions)
+(key ?) edit job
+(key ?) clear job
 
 creator Craig Still
 C++ programer 
