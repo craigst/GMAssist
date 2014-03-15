@@ -1,6 +1,8 @@
 /*Code conversion*/
 /* Club Var will only be OWN BRIT OR AA */
 
+JobCode(Club)
+{
 CONTROLGETTEXT, Fault,ThunderRT6TextBox29, /*get fault from job window*/
 if (Fault = "GF01" or "GFO1" or "GF1")
    {
@@ -19,3 +21,6 @@ eles if (Fault = "GF02" or "GFO2" or "GF2")
    
    
 eles {msgbox %error no fault code found%} /*no fault code from job window matched*/
+
+
+}
