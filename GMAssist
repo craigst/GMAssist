@@ -1,19 +1,23 @@
-//GUI inilize
+/*GUI inilize*/
 ver = V0.9 Beta
 Menu,Tray,Add,Exit,GuiClose
 SetTitleMatchMode, 2
-Gui, Add, Checkbox, x1 y5 w100 vCheckbox gCheckBox, Block Popups         // check box for blocking pop ups
-Gui, Add, Checkbox, x115 y5 w100 vLogger gLogger, TD Message Logger      // check box for recording messages 
-Gui, Add, Checkbox, x1 y19 w100 vbeta gbeta, Info popup block            // dissmissing info pop ups
-Gui, Add, Checkbox, x1 y39 w120 vawait gawait, Auto Await Instrutions    // send await instruions on driver clears
-Gui, Add, button, x0 y390 gClear, Clear ; to clear the list of messages  // clear message box
-Gui, Add, button, x165 y390 ghelp, Help                                  // opens help display 
-Gui, Add, button, x130 y390 gTime, Time                                  // pastes time in msg window
-Gui, Add, button, x110 y390 gGoogle, G                                   // google chrome link / custom link 
-Gui, Add, button, x137 y38 GOptions , Options                            // time option window
-Gui, Add, edit, x3 y65 h310 w195 vlist,                                  // Text/msg box
-Gui, Add, text, x45 y395 w60 , %ver%                                     // version tag
-Gui, Show, h415 w200 X945 Y5 ,TD Assist                                  // Opens GUI with SIZE
-
-
+Gui, Add, Checkbox, x1 y5 w100 vCheckbox gCheckBox, Block Popups         /* check box for blocking pop ups */
+Gui, Add, Checkbox, x115 y5 w100 vLogger gLogger, TD Message Logger      /* check box for recording messages */
+Gui, Add, Checkbox, x1 y19 w100 vbeta gbeta, Info popup block            /* dissmissing info pop ups */
+Gui, Add, Checkbox, x1 y39 w120 vawait gawait, Auto Await Instrutions    /* send await instruions on driver clears */
+Gui, Add, button, x0 y390 gClear, Clear ; to clear the list of messages  /* clear message box */
+Gui, Add, button, x165 y390 ghelp, Help                                  /* opens help display */
+Gui, Add, button, x130 y390 gTime, Time                                  /* pastes time in msg window */
+Gui, Add, button, x110 y390 gGoogle, G                                   /* google chrome link / custom link */
+Gui, Add, button, x137 y38 GOptions , Options                            /* time option window */
+Gui, Add, edit, x3 y65 h310 w195 vlist,                                  /* Text/msg box */
+Gui, Add, text, x45 y395 w60 , %ver%                                     /* version tag */
+Gui, Show, h415 w200 X945 Y5 ,TD Assist                                  /* Opens GUI with SIZE */
 Return
+
+Google: /*G Button Link*/
+	run, /*"program"*/
+return
+
+
