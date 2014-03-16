@@ -1,0 +1,16 @@
+Gui, Add, Text, x2 y130 w100 h20 , Version
+Gui, Add, Button, x112 y130 w80 h30 , SAVE
+Gui, Add, CheckBox, x2 y10 w100 h20 , Pop Up Blocker
+Gui, Add, CheckBox, x2 y40 w100 h20 , Info Blocker
+Gui, Add, CheckBox, x2 y70 w100 h20 , Message Logger
+Gui, Add, CheckBox, x2 y100 w100 h20 , Auto Await
+Gui, Add, DropDownList, x112 y10 w80 h20 , 5 Sec         ; on scene dissmiss
+Gui, Add, DropDownList, x112 y40 w80 h20 , 0 Sec         ; send message confirms
+Gui, Add, DropDownList, x112 y70 w80 h20 , 1 Sec         ; message dissmiss
+Gui, Add, DropDownList, x112 y100 w80 h20 , DropDownList ; job sound on/of
+; Generated using SmartGUI Creator 4.0
+Gui, Show, x402 y263 h177 w202, Settings
+Return
+
+GuiClose:
+ExitApp
