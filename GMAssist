@@ -30,9 +30,9 @@ Options:
 	Gui, 2:Add, CheckBox, x2 y40 w100 h20 Vinfoblocker Ginfoblocker, Info Blocker     ; Info Message Blocker / AA Update checkbox
 	Gui, 2:Add, CheckBox, x2 y70 w100 h20 VLogger GLogger, Message Logger             ; Log messages from TD checkbox
 	Gui, 2:Add, CheckBox, x2 y100 w100 h20 Vawait Gawait, Auto Await                  ; Auto send await instrution checkbox
-	Gui, 2:Add, DropDownList, x112 y10 w80 h20 , vDelay, 0Sec|2Sec|5Sec|10Sec         ; Popup Blocker delay
-	Gui, 2:Add, DropDownList, x112 y40 w80 h20 , vDelay1, 0Sec|2Sec|5Sec|10Sec        ; Info message dissmiss delay
-	Gui, 2:Add, DropDownList, x112 y70 w80 h20 , vDelay2, 0Sec|2Sec|5Sec|10Sec        ; driver message dissmis delay
+	Gui, 2:Add, DropDownList, x112 y10 w80 h20 , vDelay, Delay||0Sec|2Sec|5Sec|10Sec  ; Popup Blocker delay
+	Gui, 2:Add, DropDownList, x112 y40 w80 h20 , vDelay1, Delay||0Sec|2Sec|5Sec|10Sec ; Info message dissmiss delay
+	Gui, 2:Add, DropDownList, x112 y70 w80 h20 , vDelay2, Delay||0Sec|2Sec|5Sec|10Sec ; driver message dissmis delay
 	Gui, 2:Add, DropDownList, x112 y100 w80 h20 , vJOBSOUND ON|OFF                    ; Turn Job Recived Sound on and off
 	Gui, 2:Show, x402 y263 h177 w202, Settings                                        ; Main Options GUI
 Return
