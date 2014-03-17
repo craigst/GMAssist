@@ -1,173 +1,235 @@
-#include Codes
+;#include ClearDowns.ahk
+#NoEnv
+version = V0.9 Beta
+programlink =                     ; program link
+program = Custom                  ; custom button name
+Status = %a% %b%           ; status start
+; Info / About Info Text
+	INFO = Version: %version% `n`n`n`nWindows key + V Edit's job `n`nWindows key + C Clears job `n `nInfo popup block: stops info cleardown / ata times sent /AA Updates. `n`nBlock popups: stops on scene + on duty + job accept + off duty `n`nTD Message Logger: List Drivers Messages. `n`nAuto Await instrusions: will auto reply when driver has cleared . `n`nCustom Button: Open's A Program.
+	
 
-;#include Codes
-version = "V0.9 Beta"
+;                                          _____ __  __                  _     _   
+;                                         / ____|  \/  |   /\           (_)   | |  
+;                                        | |  __| \  / |  /  \   ___ ___ _ ___| |_ 
+;                                        | | |_ | |\/| | / /\ \ / __/ __| / __| __|
+;                                        | |__| | |  | |/ ____ \\__ \__ \ \__ \ |_ 
+;                                         \_____|_|  |_/_/    \_\___/___/_|___/\__|
+;                                                                                 
+                                           
 
-;GUI Main Program
+;                                                   ********************
+;                                                   * GUI Main Program *
+;                                                   ********************
 
+#SingleInstance
 Menu,Tray,Add,Exit,GuiClose
 SetTitleMatchMode, 2
-Gui, Add, Edit, x2 y20 w190 h460 , vmainlist                                          ; opens help display
-Gui, Add, Button, x2 y480 w60 h30 , Settings                                          ; settings menu
+Gui, Add, Edit, x2 y20 w190 h460 vmainlist,                                           ; opens help display
+Gui, Add, Button, x2 y480 w60 h30 gOptions ,  Settings                                ; settings menu
 Gui, Add, Button, x62 y480 w40 h30 gHelp , Help                                       ; opens help/about/debug display
-Gui, Add, Button, x102 y480 w50 h30 , %program%                                       ; program link / custom link
+Gui, Add, Button, x102 y480 w50 h30 gProgram, %program%                               ; program link / custom link
 Gui, Add, Button, x152 y480 w40 h30 gTime, Time                                       ; pastes time in msg window */
-Gui, Add, Text, x2 y0 w190 h20 , Status:                                              ; text read out of on/off items
-Gui, Show, x816 y1 h517 w199, GMAssist                                                ; main window
+Gui, Add, Text, x2 y2 w190 h20 , Status:  %Status%                                    ; text read out of on/off items
+Gui, Show, x816 y1 h513 w199, GMAssist                                                ; main window
 Return
 
 GuiClose:
 ExitApp
 
-;Main GUI Buttons and Options
+
+;                                                   ****************
+;                                                   * GUI Settings *
+;                                                   ****************
+
+Options:	
+	Gui 2:+LastFoundExist
+	IfWinExist
+	{
+    Gui 2:Show
+	return
+    }
+	else
+	Gui, 2:Add, Text, x2 y130 w100 h30 , %version%                                       ; Text Line edit
+	Gui, 2:Add, Button, x112 y130 w80 h30 gSAVE, SAVE                                    ; Save Button
+	Gui, 2:Add, CheckBox, x2 y10 w100 h20 vPOPUP , Pop Up Blocker                         ; Popup Block checkbox
+	Gui, 2:Add, CheckBox, x2 y40 w100 h20 vinfoblocker , Info Blocker                     ; Info Message Blocker / AA Update checkbox
+	Gui, 2:Add, CheckBox, x2 y70 w100 h20 vLogger , Message Logger                       ; Log messages from TD checkbox
+	Gui, 2:Add, CheckBox, x2 y100 w100 h20 vawait , Auto Await                           ; Auto send await instrution checkbox
+	Gui, 2:Add, DropDownList, x112 y10 w80 h20 vDelay r5,  Delay||0Sec|2Sec|5Sec|10Sec   ; Popup Blocker delay
+	Gui, 2:Add, DropDownList, x112 y40 w80 h20 vDelay1 r5,  Delay||0Sec|2Sec|5Sec|10Sec  ; Info message dissmiss delay
+	Gui, 2:Add, DropDownList, x112 y70 w80 h20 vDelay2 r5,  Delay||0Sec|2Sec|5Sec|10Sec  ; driver message dissmis delay
+	Gui, 2:Add, DropDownList, x112 y100 w80 h20 vJOBSOUND r5, ON/OFF||ON|OFF             ; Turn Job Recived Sound on and off
+	Gui, 2:Show, x402 y263 h165 w202, Settings                                           ; Main Options GUI
 
 
-;GUI Options inilize
-Options:
-	Gui, 2:Add, Text, x2 y130 w100 h20 , %version%                                    ; Text Line edit
-	Gui, 2:Add, Button, x112 y130 w80 h30 gSAVE, SAVE                                 ; Save Button
-	Gui, 2:Add, CheckBox, x2 y10 w100 h20 VPOPUP GPOPUP, Pop Up Blocker               ; Popup Block checkbox
-	Gui, 2:Add, CheckBox, x2 y40 w100 h20 Vinfoblocker Ginfoblocker, Info Blocker     ; Info Message Blocker / AA Update checkbox
-	Gui, 2:Add, CheckBox, x2 y70 w100 h20 VLogger GLogger, Message Logger             ; Log messages from TD checkbox
-	Gui, 2:Add, CheckBox, x2 y100 w100 h20 Vawait Gawait, Auto Await                  ; Auto send await instrution checkbox
-	Gui, 2:Add, DropDownList, x112 y10 w80 h20 , vDelay, Delay||0Sec|2Sec|5Sec|10Sec  ; Popup Blocker delay
-	Gui, 2:Add, DropDownList, x112 y40 w80 h20 , vDelay1, Delay||0Sec|2Sec|5Sec|10Sec ; Info message dissmiss delay
-	Gui, 2:Add, DropDownList, x112 y70 w80 h20 , vDelay2, Delay||0Sec|2Sec|5Sec|10Sec ; driver message dissmis delay
-	Gui, 2:Add, DropDownList, x112 y100 w80 h20 , vJOBSOUND ON|OFF                    ; Turn Job Recived Sound on and off
-	Gui, 2:Show, x402 y263 h177 w202, Settings                                        ; Main Options GUI
 Return
 
-; Help/debug Window GUI
+
+
+;                                                 *************************
+;                                                 * GUI Help/debug Window *
+;                                                 *************************
+
 Help: 
-    Gui, 3:Add, Text, x12 y10 w220 h350 , Help / About: %INFO%                        ; Info / About Text Window
-	Gui, 3:Add, Edit, x242 y30 w220 h330 , vDebug                                     ; Debug list
+	Gui 3:+LastFoundExist
+	IfWinExist
+	{
+    Gui 3:Show
+	return
+    }
+	else
+    Gui, 3:Add, Text, x12 y10 w220 h350 , %INFO%                                      ; Info / About Text Window
+	Gui, 3:Add, Edit, x242 y30 w220 h330 vDebug,                                      ; Debug list
 	Gui, 3:Add, Text, x242 y10 w80 h20 , Debug:                                       ; Debug Text only
 	Gui, 3:Show, x261 y180 h379 w479, Help/About/Debug                                ; Help / about / debug Window
 	
-; Info / About Info Text
-INFO = Version: %version%, Windows key + V Edit's job  
-	`nWindows key + C Clears job
-	`nInfo popup block: `nstops info cleardown / ata times sent /AA Updates
-	`nBlock popups: `nstops on scene + on duty + job accept + off duty  
-	`nTD Message Logger: `nList Drivers Messages
-	`nAuto Await instrusions: `nwill auto reply when driver has cleared 
-	`nCustom Button: `nOpen's A Program
+
 Return
 
-#IFWINACTIVE, Job Summary ;if job dispatached play sound every 15 seconds
-{
- sleep , 15000
- play
-}
+;
+;                                                   ********************
+;                                                   **** Main Code *****
+;                                                   ********************
+;
 
-Program: 
-        program = "Custom"
-	run, ;"program"
+
+Program: ; Custom button 
+	run, %programlink%
 return
 
+#Persistent
+IfWinExist, TD Note {    ; Dissmisses all driver on scene , accepts and on duty
+   IF (POPUP = TRUE){
+   Sleep ,POPUPD
+   ControlClick, THUNDERRT6COMMANDBUTTON1, TD Note,,,,NA 
+   }
 
-Logger: ;Message logger
-   GuiControlGet, Logger
-   SetTimer, Logger2, % (Logger ? 0 : "Off")
-
-Logger2: ; to colect message from drive and store in gui + log
-SetTitleMatchMode, Slow
-SetTitleMatchMode, 3
-IfWinExist, TD Message
-{
-   CONTROLgetTEXT, MSG, ThunderRT6TextBox1
-   ControlClick, THUNDERRT6COMMANDBUTTON1, TD Message
-   FileAppend, %MSG%`n, C:\Tdmessageslog.txt                           ; Adds MSG to log
-   GuiControlGet, list
-   list .= text
-   GuiControl,, mainlist, %mainlist%`n`n
-   IfWinExist, TD Manager
+#Persistent
+IfWinExist, TD Message {  ; Dissmiss and recorded Driver Messages
+	if (Logger = true){
+	CONTROLgetTEXT, MSG, ThunderRT6TextBox1
+    ControlClick, THUNDERRT6COMMANDBUTTON1, TD Message
+    FileAppend, %MSG%`n, C:\Tdmessageslog.txt                           ; Adds MSG to log
+    GuiControlGet, list
+    list .= text
+    GuiControl,, mainlist, %mainlist%`n`n
+    IfWinExist, TD Manager
     WinActivate, wintitle, TD Manager
 	ControlSend,, mainlist, ^{end}
-}
-Return
-
-Save: ; Save Settings
-;save / close
-
-infoblocker: ; Info Block 
-   2GuiControlGet, infoblocker
-   SetTimer, infoblocker2, % (infoblocker ? 0 : "Off")
-infoblocker2:  ; blockS confirm messages 
-SetTitleMatchMode, 3
-   IfWinExist, Garage Manager ahk_class #32770
-   {
-   WinClose
-   }
-Return
+	}
+	
+#Persistent
+IfWinExist, Garage Manager ahk_class #32770 { ; Message comfirm
+	if (infoblocker = true){
+    WinClose
+	}
 
 
-await:
-   2GuiControlGet, await
-   SetTimer, await2, % (beta ? 0 : "Off")
-await2: ; auto sent await instrution on clear down
-IfWinExist, TD Clear Note
-{
+#Persistent
+IfWinExist, TD Clear Note { ; Auto Driver Clear Down
+	if (await = true){
 	SLEEP 1000
 	Controlclick, THUNDERRT6OPTIONBUTTON2, TD Clear Note 
 	sleep, 300
 	ControlClick, THUNDERRT6COMMANDBUTTON2, TD Clear Note
+	}
+
+
+#Persistent
+#IFWINACTIVE, Job Summary { ;if job dispatached play sound every 10 seconds
+	if (JOBSOUND = "ON")
+	{ 
+	while (WinExist, Job Summary)
+    SoundBeep, 750, 500
+    sleep 10000
+	}
+
+
+#Persistent
+#IfWinActive. Job Update { ; AA job Update dissmiss added
+	if (POPUP = True) {
+	ControlClick, THUNDERRT6COMMANDBUTTON1, Job Update
+	}
+
+Save:
+Gui, 2:Submit,Nohide
+;MsgBox % "Selected value from DDL: " Delay ; the letter v is NOT part of the variable name!
+;MsgBox % "Selected value from DDL1: " Delay1
+;MsgBox % "Selected value from DDL2: " Delay2
+if (Delay = "Delay")
+{ 
+MsgBox "Empty" 
 }
-  
-Return
+else {
+StringReplace, Delay, Delay, sec, , All ; remove "sec" from variable so we can do some math
+POPUPD:=Delay*1000
+}
+if (Delay1 = "Delay")
+{ 
+MsgBox "Empty2" 
+}
+else {
+StringReplace, Delay1, Delay1, sec, , All ; remove "sec" from variable so we can do some math
+INFOD:=Delay1*1000
+}
+if (Delay2 = "Delay")
+{ 
+MsgBox "Empty3" 
+}
+else {
+StringReplace, Delay2, Delay2, sec, , All ; remove "sec" from variable so we can do some math
+MSGD:=Delay2*1000
+}
 
-POPUP:
-   2GuiControlGet, POPUP
-   SetTimer, POPUP2, % (POPUP ? 0 : "Off")
-
-POPUP2: ; block td notes acept and on scenes
-SetTitleMatchMode, 3
-   IfWinExist, TD Note
-   {
-   sleep 3000
-   ControlClick, THUNDERRT6COMMANDBUTTON1, TD Note,,,,NA 
-   }
-      
+;MsgBox % "Sleep in ms: " POPUPD
+;MsgBox % "Sleep in ms: " INFOD
+;MsgBox % "Sleep in ms: " MSGD
+ Gui, 2:Destroy
 return
 
-
-
-Clear: ; CLEAR MAIN GUI LIST NO LINK
-GuiControl,, list,
-return
+;Clear:  CLEAR MAIN GUI LIST NO LINK
+;GuiControl,, list,
+;return
 
 
 Time: ; Adds Time In window
     time = %A_Hour%:%A_Min%
 	GuiControlGet, mainlist
-	mainlist = temp
-	mainlist .= &temp& time
+	mainlist .= mainlist + time
 	GuiControl,, mainlist, time`n
-    RETURN
-	
-;Edits open active job
-#IFWINACTIVE, ahk_class ThunderRT6FormDC,                                             ; Checks if A job Window is open
-#V::                                                                                  ; If Window key + V is Pressed 
-SetTitleMatchMode, Slow
-ControlGetText, NOTES, ThunderRT6TextBox2                                             ; Copys Job Notes 
-CONTROLGETTEXT, DES, ThunderRT6TextBox23,                                             ; Copys job Destnation
-CONTROLGETTEXT, DETAILS, ThunderRT6TextBox22,                                         ; Copys Job Details
-CONTROLSETTEXT, ThunderRT6TextBox2,%NOTES% `n`n%DETAILS% `n`n%NOTES%                  ; Pastes All in to Job Notes
-CONTROLSETTEXT, ThunderRT6TextBox23,                                                  ; Clears Destination Box
-CONTROLSETTEXT, ThunderRT6TextBox22,                                                  ; Clears Job Details box
-CONTROLSETTEXT, EDIT8, With Vehicle                                                   ; Edits Drivers location
-CONTROLSETTEXT, EDIT7, With Vehicle                                                   ; Edits Keys Location
-return
+    RETURN 
+
+                          
+;                                                    *************************
+;                                                    * Edits open active job *
+;                                                    *************************
+;
+#IFWINACTIVE, ahk_class ThunderRT6FormDC,                                            
+#V::                                                                               
+	SetTitleMatchMode, Slow
+	ControlGetText, NOTES, ThunderRT6TextBox2                                        ; Copys Job Notes 
+	CONTROLGETTEXT, DES, ThunderRT6TextBox23,                                        ; Copys job Destnation
+	CONTROLGETTEXT, DETAILS, ThunderRT6TextBox22,                                    ; Copys Job Details
+	CONTROLSETTEXT, ThunderRT6TextBox2,%NOTES% `n`n%DETAILS% `n`n%NOTES%             ; Pastes All in to Job Notes
+	CONTROLSETTEXT, ThunderRT6TextBox23,                                             ; Clears Destination Box
+	CONTROLSETTEXT, ThunderRT6TextBox22,                                             ; Clears Job Details box
+	CONTROLSETTEXT, EDIT8, With Vehicle                                              ; Edits Drivers location
+	CONTROLSETTEXT, EDIT7, With Vehicle                                              ; Edits Keys Location
+	return
+                                             
 
 
 
-;Clears open active job
+
+;                                                    
+;                                                    **************************
+;                                                    * Clears open active job *
+;                                                    **************************
+;
 SetTitleMatchMode, 2
 SetTitleMatchMode, Slow
 #IFWINACTIVE, Recovery ,
-#C::
-CONTROLSETTEXT, Club, ThunderRT6TextBox??,
-JobCode(Club)
+#C:: 
+	ControlGetText, Club, ThunderRT6TextBox??
+	return
 
-
-return
